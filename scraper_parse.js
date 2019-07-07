@@ -43,10 +43,10 @@ function parser0(htmlContent) {
     console.log("\t\t>>PBD(): parser0: starting");
     let postBatch = []; //postBatch[] holds 6 Maps with structure: { [title: string], [url: string], [image: string] }
     
-        let postDivs = $('.td_module_14', htmlContent);
+        let postDiv = $('.td_module_14', htmlContent);
         for (let i = 0; i < MAX_POSTS_PER_BLOG; i++) {
 
-            let currPost = $(postDivs[i]);   //isolate the div for 1 post
+            let currPost = $(postDiv[i]);   //isolate the div for 1 post
 
             // Get post title, URL, and image URL
             let title = currPost.find(".entry-title");
@@ -71,6 +71,7 @@ function parser1(htmlContent) {
     console.log("\t\t>>PBD(): parser1: starting");
     let postBatch = []; //postBatch[] holds 6 Maps with structure: { [title: string], [url: string], [image: string] }
     
+    //hellooooo!
     console.log("\t\t>>PBD(): parser1: done, postBatch= " +  util.inspect(postBatch));
     return postBatch;
 }
