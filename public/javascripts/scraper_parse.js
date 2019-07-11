@@ -128,6 +128,7 @@ function parser2(htmlContent) {
     return postBatch; 
 }
 
+
 // Use for blog: A Broken Backpack
 function parser3(htmlContent) {
     console.log("\t\t>>PBD(): parser3: starting");

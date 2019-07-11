@@ -14,13 +14,14 @@ angular.module('appUserList', [])  //getting this error on old 260 projects as w
 
 // Calls scraping loop, holds scraped data
 function tbfCtrl($scope) {   // you can call functions in here from the html page by using stuff like "ng-submit='fnName(param)' "
-    console.log(">Scrape_Main: tbfCtrl(): starting");
+    console.log("TBFCTRL(): starting");
                          
     $scope.allPostData = []; // since this is in the scope, we can access this outside on the html 
     
     
     // we should call this first thing when the page loads, and also whenver the user clicks "Refresh" btn
     $scope.getBlogData = function() {
+        console.log(">GetBlogData(): starting");
         // 4 blog sites, we scrape data from 6 posts on each one
         // So we have data from 24 posts max
         const scrapeURLs = ["https://www.passionpassport.com", "https://www.danflyingsolo.com/travel-blog/",
@@ -35,6 +36,7 @@ function tbfCtrl($scope) {   // you can call functions in here from the html pag
         //for (i in scrapeURLs){ 
         //   blogScraper(scrapeURLs[i], i);
         //} */
+        console.log(">GetBlogData(): done");
     };
 
     
@@ -42,7 +44,7 @@ function tbfCtrl($scope) {   // you can call functions in here from the html pag
     // Pulls HTML from site and calls individual parse functions for each one
     // need to test how tbfCtrl affects the async stuff
     async function blogScraper(url, blogIndex) {
-        console.log(">Scrape_Main: blogScraper(): starting");
+        console.log(">BlogScraper(): starting");
         
         try {
             const browser = await puppeteer.launch();
@@ -69,8 +71,8 @@ function tbfCtrl($scope) {   // you can call functions in here from the html pag
         console.log(">Scrape_Main: deliverBlogData(): done, allPostData length now= " + $scope.allPostData.length);
     }
     
-    
-}
+
+} //end controller
 
 
 // Simple pause function, mainly for testing

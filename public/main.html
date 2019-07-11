@@ -11,16 +11,20 @@
     
  <body>
   
-     <div ng-app='tbfApp' ng-controller='tbfCtrl'>
-
+     <div ng-app='tbfApp' ng-controller='tbfCtrl'> <!-- start ng-app div -->
        <h1>Hello World</h1>
        
-       <!-- let's have a btn here to refresh posts/call getBlogData() - but also the first thing that should happen is refreshing posts anyways -->
+       <!-- let's have a btn here to refresh posts/call getBlogData() - but it should also be called on page load -->
+      <p>
+       <button type="button" ng-click="getBlogData()">Refresh Posts</button>
+      </p>
+       
        
      </div> <!-- end ng-app div -->
  </body>
  
  
+ <!-- URL for this site: http://18.220.235.19:8080/  -->
  
  
 </html>
