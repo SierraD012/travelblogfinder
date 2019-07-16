@@ -2,11 +2,18 @@
 <html>
     
  <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
-    <script src="javascripts/scraper_main.js"></script> <!-- don't think we need scraper_parse.js too, but maybe -->
-    <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+    <meta charset="utf-8">
+    <title>Travel Blog Finder</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    
+    <!-- local files -->
     <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
-     
+    <script src="javascripts/scraper_main.js"></script> 
+
  </head>
     
  <body>
@@ -19,12 +26,32 @@
        <button type="button" ng-click="getBlogData()">Refresh Posts</button>
       </p>
        
+     <hr>
+     
+     <!-- display all blog posts in grid format -->  
+     <div class="container text-center"> 
+       <ul id="postsGrid" >
+           
+          <li class="list-group-item">
+            <div class="col-sm-3">
+               <img ng-src="{{post.image}}" width="150px"/>
+               <span class="postTitle">{{post.title}}</span> <br/> <!-- make this a link to {{post.url}} -->
+            </div>
+          </li>
+          
+       </ul>
+
+    </div>
+       
+       
+       
+       
        
      </div> <!-- end ng-app div -->
  </body>
  
  
- <!-- URL for this site: http://18.220.235.19:8080/  -->
+ <!-- URL for this site: http://18.220.235.19:8080/  it's gonna change every time the instance restarts!! --> 
  
  
 </html>

@@ -5,15 +5,10 @@ const parseBlogData = require('./scraper_parse');
 const util = require('util')
 const puppeteer = require('puppeteer');
 const $ = require('cheerio'); 
-//const reqProm = require('request-promise');
 
 
-angular.module('appUserList', [])  //getting this error on old 260 projects as well so it's probably ok 
-.controller('tbfCtrl', tbfCtrl);
-
-
-// Calls scraping loop, holds scraped data
-function tbfCtrl($scope) {   // you can call functions in here from the html page by using stuff like "ng-submit='fnName(param)' "
+angular.module('appUserList', [])  
+.controller('tbfCtrl', ['$scope', function($scope) {   // you can call functions in here from the html page by using stuff like "ng-submit='fnName(param)' "
     console.log("TBFCTRL(): starting");
                          
     $scope.allPostData = []; // since this is in the scope, we can access this outside on the html 
@@ -38,7 +33,6 @@ function tbfCtrl($scope) {   // you can call functions in here from the html pag
         //} */
         console.log(">GetBlogData(): done");
     };
-
     
     
     // Pulls HTML from site and calls individual parse functions for each one
@@ -72,7 +66,45 @@ function tbfCtrl($scope) {   // you can call functions in here from the html pag
     }
     
 
-} //end controller
+}]) //end controller
+
+
+//Replaces the <blogPost> tag with the code inside "template"
+.directive('blogPost', function blogPostDirective() {
+  return {
+    scope: {
+      post: '='
+    },
+    restrict: 'E', //Element - forces the directive code to be used like a normal html tag, i.e. <directive></directive>
+    replace: 'true',
+    template: (
+        //replace this with the code that works to show the blogPostData contents
+      '<li class="list-group-item">' +
+         '<div class="col-sm-3">' + 
+            '<img ng-src="{{user.avatarUrl}}" class="img-circle" width="80px"/>' +
+                '</div>' +
+                  '<div class="col-sm-9">' +
+                      '<span class="name">{{user.name}}</span><br/>' +
+                      '<span class="email">{{user.email}}</span><br/>' +
+                      '<span class="glyphicon glyphicon-map-marker text-muted c-info"></span>' +
+                      '<span class="glyphicon glyphicon-earphone text-muted c-info"></span>' +
+                      '<span class="fa fa-comments text-muted c-info"></span>' +
+                  '</div>' +
+              '</li>'
+    ),
+    link: linkDefaultImage
+  };
+  
+  
+  //check if the blogPost was unable to find an image for some reason, if so just use a default image
+  function linkDefaultImage (scope) {
+    if (!scope.post.imgURL) {
+      scope.post.imgURL = 'https://www.drupal.org/files/issues/default-avatar.png';
+    }
+  }
+});  //end directive
+
+
 
 
 // Simple pause function, mainly for testing
