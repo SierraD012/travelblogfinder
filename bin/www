@@ -73,6 +73,7 @@ function onError(error) {
       process.exit(1);
       break;
     default:
+      console.error(">WWW: got error: " + error);
       throw error;
   }
 }

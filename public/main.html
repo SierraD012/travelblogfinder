@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <title>Travel Blog Finder</title>
     
-    <!-- the order of these scripts is super important -->
+    <!-- Libraries & Boostrap -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     
-    <!-- local files -->
+    <!-- Local Files -->
     <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
     <script src="javascripts/client.js"></script> 
 
@@ -20,11 +20,10 @@
  <body>
   
      <div ng-app='tbfApp' ng-controller='tbfCtrl'> <!-- start ng-app div -->
-       <h1>Hello World</h1>
+       <h1>Travel Blog Finder</h1>
        
-       <!-- let's have a btn here to refresh posts/call getBlogData() - but it should also be called on page load -->
       <p>
-       <button type="button" ng-click="getBlogData()">Refresh Posts</button>
+       <button type="button" ng-click="refreshBlogData()">Refresh Posts</button>
       </p>
        
      <hr>
@@ -33,7 +32,7 @@
      <div class="container text-center"> 
        <ul id="postsGrid" >
            
-          <li class="list-group-item">
+          <li ng-repeat='post in allBlogPosts'>
             <div class="col-sm-3">
                <img ng-src="{{post.image}}" width="150px"/>
                <span class="postTitle">{{post.title}}</span> <br/> <!-- make this a link to {{post.url}} -->
@@ -52,7 +51,7 @@
  </body>
  
  
- <!-- URL for this site: http://13.58.98.18:8080/  it's gonna change every time the instance restarts!! --> 
+ <!-- URL for this site: http://18.217.48.32:8080/  it's gonna change every time the instance restarts!! --> 
  
  
 </html>
