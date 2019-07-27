@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
     
+    <!-- STATUS: backend is totally working as far as I can tell, it chooses 8 rand posts to display and all pics/links are working.
+    Just need to do some better CSS so it looks ok-->
+    
+    
+    
  <head>
     <meta charset="utf-8">
     <title>Travel Blog Finder</title>
@@ -32,7 +37,7 @@
        <div class="container text-center"> 
          <ul id="postsGrid" >
              
-            <li ng-repeat='post in allBlogPosts'>
+            <li ng-repeat='post in selectedPosts'>
               <div class="col-sm-3">
                  <p>Title:</p>
                  <span class="postTitle">{{post.title}}</span>

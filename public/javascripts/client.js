@@ -3,11 +3,13 @@
 var app = window.angular.module('tbfApp', []);
 const SERVER_ADDR = "http://13.59.91.58";  //CHANGE THIS EVERY TIME YOU RESTART EC2 INSTANCE
 const SERVER_PORT = ":8080";
+const NUM_SELECTED_POSTS = 8;
 
 app.controller('tbfCtrl', ['$scope', function($scope) {
     console.log("TBFCTRL(): starting");
             
     $scope.allBlogPosts = [];
+    $scope.selectedPosts = []; // this holds 8 random posts to display
 
     // Call this on page load - get initial/existing blog posts from server
     $scope.getBlogData = function() {
@@ -15,10 +17,8 @@ app.controller('tbfCtrl', ['$scope', function($scope) {
         
         // Get existing posts from server
          $.get(SERVER_ADDR + SERVER_PORT + "/getPosts", function(serverResponse) {  //TODO: this ip will change every time we start the page, I should fix the ec2 instance settings
-            console.log('>GetBlogData(): got response from server '); //, serverResponse);  
+            console.log('>GetBlogData(): got posts from server '); //, serverResponse);  
             updateScopeBlogData(serverResponse, $scope);
-            console.log(">GetBlogData(): done, allBlogPosts length now= " + $scope.allBlogPosts.length);
-            console.log($scope.allBlogPosts);
         });
     };
     $scope.getBlogData();
@@ -45,12 +45,35 @@ function updateScopeBlogData (serverResponse, $scope) {
     var newBlogData = JSON.parse(serverResponse);
     $scope.allBlogPosts = [];
     
-    //update scope with new data and notify scope to update DOM
+    //update scope with new random posts and notify scope to update DOM
     $scope.$apply(function() {
         for (let entry of newBlogData) {
             $scope.allBlogPosts.push(entry);
         }
+        chooseRandomPosts($scope);
     });
+}
+
+// Chooses random posts from allBlogPosts[] to display on page
+function chooseRandomPosts ($scope) {
+    
+    $scope.selectedPosts = [];  //empty prev selection
+    let blogPostOptions = JSON.parse(JSON.stringify($scope.allBlogPosts));
+    //kinda slow but effective way to deep copy our array so we can remove already picked blog posts from it
+    console.log("\t>>ChooseRandPosts(): starting"); //, blogPostOpts len= " + blogPostOptions.length);
+    
+    for (let i = 0; i < NUM_SELECTED_POSTS; i++) {
+        // pick a rand post from blogPostOptions
+        let randPostIdx = Math.floor(Math.random() * (blogPostOptions.length));
+        //console.log("\t>>ChooseRandPosts(): *** blogPostOpts[] len= " + blogPostOptions.length + ", chose post at idx " + randPostIdx);
+        $scope.selectedPosts[i] = Object.assign({}, blogPostOptions[randPostIdx]);  //shallow copy since blogPostOpts[] has no references inside objs
+        //console.log("\t>>ChooseRandPosts(): preparing to splice obj: " + blogPostOptions[randPostIdx].title);
+        //remove chosen blog post from blogPostOptions[]
+        blogPostOptions.splice(randPostIdx, 1);
+        //console.log("\t>>ChooseRandPosts(): just removed chosen post from bpO[], len now= " + blogPostOptions.length);
+    }
+    
+    console.log("\t>>ChooseRandPosts(): done, randSelectedPosts len now= " + $scope.selectedPosts.length);
 }
 
 //Replaces the <blogPost> tag with the code inside "template"
