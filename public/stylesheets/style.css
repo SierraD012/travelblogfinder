@@ -20,7 +20,7 @@ h1 {
   height: 220px;
   background-color: white;
   /* border: 6px solid #ffffff;  */
-  /*float: left;*/
+  float: left;
   margin: 20px;
   overflow: hidden;
 }

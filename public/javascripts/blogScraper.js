@@ -7,8 +7,8 @@ const util = require('util')
 const $ = require('cheerio');
 const puppeteer = require('puppeteer');
 const MAX_POSTS_PER_BLOG = 6; 
-const blogURLs = ["https://www.passionpassport.com", "https://www.danflyingsolo.com/travel-blog/",
-                "https://mylifesamovie.com/category/popular/", "https://abrokenbackpack.com/category/travel/"];
+const blogURLs = ["https://www.passionpassport.com", "https://www.danflyingsolo.com/travel-blog/"];
+                //"https://mylifesamovie.com/category/popular/", "https://abrokenbackpack.com/category/travel/"];
 var allBlogData = []; //collect all blog post data here to return to server
 
 // Called by server - uses scrapeSingleBlog to get data from all blogURLs,
@@ -26,14 +26,10 @@ exports.getBlogPosts = async function() {
       });
     }
     
-    //we just put all async calls to scrapeSingleBlog into a Promise array. now we resolve all of them and return the final result
-    console.log(">>BlogScraper: scraperPromises.len = " + scraperPromises.length + ", resolving all Promises");
-    
     await Promise.all(scraperPromises)
     //.then(response => console.log("\t>> All Promises resolved successfully"))
-    .catch(error => console.log("\t>> One Promise had an error:" + error)); // one of the promises failed
+    .catch(error => console.log("\t>> One Promise had an error:" + error));
     
-    //now need to put the allBlogData push into the scrapeSingleBlog function since each promise can do it on its own
     console.log(">>BlogScraper: getBlogPosts() done, allBlogData LEN= " + allBlogData.length);
     return allBlogData;
 };
@@ -58,7 +54,6 @@ async function scrapeSingleBlog(blogURL, blogIndex) {
         scrapedBlogData = {title:"Failed to parse blog" + blogIndex }; //need to be able to handle empty fields on frontend too
     }
     
-
     // if we have data overwriting each other from the scrapers, this is where we should look to solve that issue
     for (let entry of scrapedBlogData) {
         allBlogData.push(entry);

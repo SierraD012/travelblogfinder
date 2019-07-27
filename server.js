@@ -25,9 +25,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter); //we're not gonna have a /users route
-
 // Globals
 var blogPostData = [];
 
@@ -36,9 +33,6 @@ async function startup() {
     console.log(">SERVER: startup() called");
     blogPostData = await scraper.getBlogPosts();
     console.log(">SERVER: got initial blog data, len= " + blogPostData.length);
-    
-    //now blogPostData has a batch of posts to send back to client, 
-    //so we don't need to call scraper again when a client connects
 }
 startup();
 
@@ -63,7 +57,6 @@ app.get('/refreshPosts', async function(req, res) {
   console.log(">SERVER: REFRESHPOSTS requested");
   blogPostData = []; //clear old content
   blogPostData = await scraper.getBlogPosts();
-  console.log(">SERVER: got new blog data from scraper, len= " + blogPostData.length);
 
   res.send(JSON.stringify(blogPostData));
   res.end();
@@ -91,13 +84,5 @@ app.use(function(err, req, res, next) {
 });
 
 
-// Simple pause function, mainly for testing
-async function pause(time){
-    let promise = new Promise((resolve, reject) => {
-        setTimeout(() => resolve(), time);
-      });
-    let result = await promise;
-}
-
-
+//////////////////////
 module.exports = app;

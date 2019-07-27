@@ -22,30 +22,27 @@
      <div ng-app='tbfApp' ng-controller='tbfCtrl'> <!-- start ng-app div -->
        <h1>Travel Blog Finder</h1>
        
-      <p>
-       <button type="button" ng-click="refreshBlogData()">Refresh Posts</button>
-      </p>
+        <p>
+         <button type="button" ng-click="refreshBlogData()">Refresh Posts</button>
+        </p>
+         
+       <hr>
        
-     <hr>
-     
-     <!-- display all blog posts in grid format -->  
-     <div class="container text-center"> 
-       <ul id="postsGrid" >
-           
-          <li ng-repeat='post in allBlogPosts'>
-            <div class="col-sm-3">
-               <img ng-src="{{post.image}}" width="150px"/>
-               <span class="postTitle">{{post.title}}</span> <br/> <!-- make this a link to {{post.url}} -->
-            </div>
-          </li>
-          
-       </ul>
-
-    </div>
-       
-       
-       
-       
+       <!-- display all blog posts in grid format -->  
+       <div class="container text-center"> 
+         <ul id="postsGrid" >
+             
+            <li ng-repeat='post in allBlogPosts'>
+              <div class="col-sm-3">
+                 <p>Title:</p>
+                 <span class="postTitle">{{post.title}}</span>
+                 <a href="{{post.url}}" target="_blank"><img src="{{post.image}}" width="100px"/></a>
+                 <br/><br/>
+              </div>
+            </li>
+            
+         </ul>
+      </div>
        
      </div> <!-- end ng-app div -->
  </body>
